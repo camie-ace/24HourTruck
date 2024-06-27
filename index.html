@@ -48,6 +48,8 @@
     <button onclick="sendLocation()">Send Location</button>
 
     <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const myParam = urlParams.get("id");
       function sendLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
@@ -65,6 +67,7 @@
           body: JSON.stringify({
             Latitude: position.coords.latitude,
             Longitude: position.coords.longitude,
+            id: myParam,
           }),
         });
 
