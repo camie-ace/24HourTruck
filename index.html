@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        background-color: cornsilk;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        gap: 1rem;
+        text-transform: capitalize;
+      }
+
+      p {
+        font-size: 20px;
+        font-weight: 500;
+        line-height: 40px;
+      }
+
+      button {
+        padding: 13px 20px;
+        font-size: 15px;
+        background-color: rgba(0, 128, 128, 0.525);
+        color: white;
+        border: none;
+        border-radius: 20px;
+      }
+
+      span {
+        color: red;
+      }
+    </style>
+    <title>Get Drivers Location</title>
+  </head>
+  <body>
+    <p>
+      Please Enable location on your device and then hit the button below to
+      send ur location to a mechanic
+    </p>
+    <span>Please for better accuracy use a smartPhone</span>
+    <button onclick="sendLocation()">Send Location</button>
+
+    <script>
+      function sendLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+          alert("You don't have GPS enabled");
+        }
+      }
+
+      async function showPosition(position) {
+        let res = await fetch("https://kklayn.buildship.run/recive-loc", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            Latitude: position.coords.latitude,
+            Longitude: position.coords.longitude,
+          }),
+        });
+
+        res = await res.json();
+        console.log(res);
+        if (res.res) {
+          alert(res.res);
+        } else {
+          alert("an error occured try again");
+        }
+      }
+    </script>
+  </body>
+</html>
