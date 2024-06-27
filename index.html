@@ -59,7 +59,7 @@
       }
 
       async function showPosition(position) {
-        let res = await fetch("https://kklayn.buildship.run/recive-loc", {
+        fetch("https://kklayn.buildship.run/recive-loc", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -71,13 +71,9 @@
           }),
         });
 
-        res = await res.json();
-        console.log(res);
-        if (res.res) {
-          alert(res.res);
-        } else {
-          alert("an error occured try again");
-        }
+      
+          alert("Location has been sent ");
+        
       }
     </script>
   </body>
